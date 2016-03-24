@@ -16,7 +16,10 @@ Here is a quick video of it in action (click to see the full video):
 Download
 --------
 
-    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.2@aar'
+Current version: [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.timehop.stickyheadersrecyclerview/library/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.timehop.stickyheadersrecyclerview/library)
+
+    compile 'com.timehop.stickyheadersrecyclerview:library:[latest.version.number]@aar'
+
 
 Usage
 -----
@@ -80,12 +83,24 @@ The StickyHeaders aren't aware of your adapter so if you must notify them when y
     });
 ```
 
+If the Recyclerview's layout manager implements getExtraLayoutSpace (to preload more content then is
+visible for performance reasons), you must implement ItemVisibilityAdapter and pass an instance as a
+second argument to StickyRecyclerHeadersDecoration's constructor.
+```java
+    @Override
+    public boolean isPositionVisible(final int position) {
+        return layoutManager.findFirstVisibleItemPosition() <= position
+            && layoutManager.findLastVisibleItemPosition() >= position;
+    }
+```
+
+
 Item animators don't play nicely with RecyclerView decorations, so your mileage with that may vary.
 
 Compatibility
 -------------
 
-This should work in API 14+.
+API 11+
 
 Known Issues
 ------------
@@ -98,6 +113,8 @@ Known Issues
 
 Version History
 ---------------
+0.4.3 (12/24/2015) - Change minSDK to 11, fix issue with header bounds caching
+
 0.4.2 (8/21/2015) - Add support for reverse `ReverseLayout` in `LinearLayoutManager` by [AntonPukhonin](https://github.com/AntonPukhonin)
 
 0.4.1 (6/24/2015) - Fix "dancing headers" by DarkJaguar91
