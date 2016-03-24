@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Set adapter populated with example dummy data
     final AnimalsHeadersAdapter adapter = new AnimalsHeadersAdapter();
-    adapter.add("Animals below!");
+    adapter.add(ANIMALS_BELOW);
     adapter.addAll(getDummyDataSet());
     recyclerView.setAdapter(adapter);
 
@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
       buttonAdd.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              if (ANIMALS_BELOW.equals(mAdapter.getItem(0))) {
-                  mAdapter.remove(ANIMALS_BELOW);
+              if (ANIMALS_BELOW.equals(adapter.getItem(0))) {
+                  adapter.remove(ANIMALS_BELOW);
               } else {
-                  mAdapter.add(0, ANIMALS_BELOW);
+                  adapter.add(0, ANIMALS_BELOW);
               }
           }
       });
@@ -149,10 +149,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public long getHeaderId(int position) {
-      if (position == 0) {
+      String item = getItem(position);
+      if (ANIMALS_BELOW.equals(item)) {
         return -1;
       } else {
-        return getItem(position).charAt(0);
+        return item.charAt(0);
       }
     }
 
